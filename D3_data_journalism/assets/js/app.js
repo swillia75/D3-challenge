@@ -63,7 +63,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
                         .append("circle")
                         .attr("cx", data => xLinearScale(data.age))
                         .attr("cy", data => yLinearScale(data.smokes))
-                        .attr("r", 20)
+                        .attr("r", 15)
                         .attr("fill", "maroon")
                         .attr("opacity", ".25");
 
@@ -71,11 +71,13 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
                         .data(censusData)
                         .enter()
                         .append("text")
-                        .attr("cx", data => xLinearScale(data.age))
-                        .attr("cy", data => yLinearScale(data.smokes))
-                        .attr("font-size", 5 'px')
-                        .attr("color", "white")
-                        .text(data => data.abbr);
+                        .text(data => data.abbr)
+                        .attr("x", data => xLinearScale(data.age))
+                        .attr("y", data => yLinearScale(data.smokes))
+                        .attr("font-size", "0.8em" )
+                        .attr("fill", "black")
+                        .attr("text-anchor", "middle")
+                        ;
                        
 
     //Initialize tooltip
