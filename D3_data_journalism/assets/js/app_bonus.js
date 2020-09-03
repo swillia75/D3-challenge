@@ -110,9 +110,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     });
 
     //Create scales fucntions
-    var xLinearScale = d3.scaleLinear()
-            .domain([28, d3.max(censusData, data => data.age)])
-            .range([0, width]);
+    var xLinearScale = xScale(censusData, chosenXaxis);
 
     var yLinearScale = d3.scaleLinear()
             .domain([7, d3.max(censusData, data => data.smokes)])
@@ -123,7 +121,8 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     var leftAxis = d3.axisLeft(yLinearScale);
 
     //Append axes to chart
-    chartGroup.append("g")
+    var xAxis = chartGroup.append("g")
+        .classed("x-axis", true)
         .attr("transform", `translate(0, ${height})`)
         .call(bottomAxis);
 
@@ -135,7 +134,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
                         .data(censusData)
                         .enter()
                         .append("circle")
-                        .attr("cx", data => xLinearScale(data.age))
+                        .attr("cx", data => xLinearScale(data[chosenXaxis]))
                         .attr("cy", data => yLinearScale(data.smokes))
                         .attr("r", 15)
                         .attr("fill", "maroon")
@@ -145,8 +144,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
                         .data(censusData)
                         .enter()
                         .append("text")
-                        
-                        .attr("x", data => xLinearScale(data.age))
+                        .attr("x", data => xLinearScale(data[chosenXaxis]))
                         .attr("y", data => yLinearScale(data.smokes))
                         .attr("font-size", "1em" )
                         .attr("fill", "black")
@@ -156,31 +154,24 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
                         }); 
                        
 
-    //Initialize tooltip
+    var labelGroup = chartGroup.append("g")
+        .attr("transform", `translate(${width / 2}, ${height + 30})`)
 
-    // var toolTip = d3.tip ()
-    //     .attr("class", "tooltip")
-    //     .offset(70, -50)
-    //     .html(function(d) {
-    //         return (`${data.state}<br>Age: ${data.age}<br>Smokes: ${data.smokes}`);
-    //     });
+    var ageLabel =  labelGroup.append("text")
+                        .attr("x", 0)
+                        .attr("y", 40)
+                        .attr("value", "age")
+                        .classed("active", true)
+                        .text("State Average Age");
 
-    // // //Create tooltip on chart
-    // chartGroup.call(toolTip);
-
-    // //Create event listeners to control tooltip display
-
-    // circleGroup.on("click", function(data) {
-    //     toolTip.show(data, this);
-    // })
-        //hide tooltip with mouseoout
-
-        // .on("mouseout", function(data) {
-        //     toolTip.hide(data);
-        // });
-
-    //Create axes labels
-
+    var incomeLabel = labelGroup.append("text")
+                .attr("x", 0)
+                .attr("y", 40)
+                .attr("value", "income")
+                .classed("active", true)
+                .text("State Average income");
+    
+    
     chartGroup.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margin.left + 40)
@@ -193,6 +184,32 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
             .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
             .attr("class", "axisText")
             .text("Age of Smokers");
+
+    var circleGroup = updateToolTip(chosenXaxis, circleGroup);
+
+    labelGroup.selectAll("text")
+            .on(click, function(){
+
+                var value = d3.select(this).attr("value");
+                if (value != chosenXaxis) {
+                    chosenXaxis = value;
+
+                    xLinearScale = xScale(censusData, chosenXaxis);
+
+                    xAxis = changeAxes(xLinearScale, xAxis);
+
+                    circleGroup = updateCircle(circleGroup, xLinearScale, xAxis);
+
+                    circleGroup = updateToolTip(chosenXaxis, circleGroup);
+
+                    if (chosenXaxis === "age") {
+                        ageLabel.classed("active", true)
+                                .classed("inactive", false);
+                        incomelabel.classed("active", false)
+                                    .classed("inactive", true);
+                    }
+                }
+            })
 
 
 
