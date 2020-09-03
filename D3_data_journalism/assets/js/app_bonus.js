@@ -6,10 +6,10 @@ var svgwidth = 960;
 var svgheight = 600;
 
 var margin = {
-    top: 30,
-    right: 30,
-    bottom: 30,
-    left: 30,
+    top: 20,
+    right: 40,
+    bottom: 80,
+    left: 100,
 }
 
 var width = svgwidth - margin.left - margin.right;
@@ -82,7 +82,28 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
                         }); 
                        
 
-    
+    //Initialize tooltip
+
+    // var toolTip = d3.tip ()
+    //     .attr("class", "tooltip")
+    //     .offset(70, -50)
+    //     .html(function(d) {
+    //         return (`${data.state}<br>Age: ${data.age}<br>Smokes: ${data.smokes}`);
+    //     });
+
+    // // //Create tooltip on chart
+    // chartGroup.call(toolTip);
+
+    // //Create event listeners to control tooltip display
+
+    // circleGroup.on("click", function(data) {
+    //     toolTip.show(data, this);
+    // })
+        //hide tooltip with mouseoout
+
+        // .on("mouseout", function(data) {
+        //     toolTip.hide(data);
+        // });
 
     //Create axes labels
 
@@ -105,6 +126,3 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
 }).catch(function(error) {
     console.log(error);
 });
-
-
-
