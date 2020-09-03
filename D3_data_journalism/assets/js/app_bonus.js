@@ -31,10 +31,10 @@ var chosenXaxis = "age";
 
 
 //Function for updating xaxis when clicked
-function xScale(censusData, chosenAxis) {
+function xScale(censusData, chosenXaxis) {
     // create xscales
     var xLinearScale = d3.scaleLinear()
-        domain([d3.min(censusData, data => data[chosenAxis]) * 0.8,
+        domain([d3.min(censusData, data => data[chosenXaxis]) * 0.8,
             d3.max(censusData, data => data[chosenAxis]) *1.2
         ])
         range([0, width]);
@@ -59,11 +59,41 @@ function updateCircle(circleGroup, newXScale, chosenAxis) {
 
     circleGroup.transition()
     .duration(500)
-    .attr("cx", data => newXScale(data[chosenAxis]));
+    .attr("cx", data => newXScale(data[chosenXaxis]));
 
     return circleGroup;
+}
 
+function toolTip(chosenXaxis, circlegroup){
+    var label;
 
+    if (chosenXaxis === "age"){
+        label = "Age";
+    }
+    else if (chosenXaxis === "income") {
+        label = "Income";
+    }
+    else {
+        label = "healthcare";
+    }
+
+    var toolTip = d3.tip()
+        .attr("class", "tooltip")
+        .offset(80, -60)
+        .html(function(data) {
+            return (`${label} ${data{chosenXaxis}}`)
+        });
+
+    circleGroup.call(toolTip);
+
+    circleGroup.on("mouseover", function(data, index) {
+        toolTip.show(data);
+    })
+        .on("mouseout", function(data, index) {
+            toolTip.hide(data);
+        });
+
+    return circleGroup;
 }
 //Read data from csv file
 
