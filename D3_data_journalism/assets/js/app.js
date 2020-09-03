@@ -67,30 +67,32 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
                         .attr("fill", "maroon")
                         .attr("opacity", ".25");
 
-    var textGroup = chartGroup.selectAll("g")
+    chartGroup.selectAll("g")
                         .data(censusData)
                         .enter()
                         .append("text")
-                        .text(data => data.abbr)
+                        
                         .attr("x", data => xLinearScale(data.age))
                         .attr("y", data => yLinearScale(data.smokes))
-                        .attr("font-size", "0.8em" )
+                        .attr("font-size", "1em" )
                         .attr("fill", "black")
                         .attr("text-anchor", "middle")
-                        ;
+                        .text(function(data) {
+                            return data.abbr;
+                        }); 
                        
 
     //Initialize tooltip
 
-    // var toolTip = d3.tip ()
-    //     .attr("class", "tooltip")
-    //     .offset(70, -50)
-    //     .html(function(d) {
-    //         return (`${data.state}<br>Age: ${data.age}<br>Smokes: ${data.smokes}`);
-    //     });
+    var toolTip = d3.tip ()
+        .attr("class", "tooltip")
+        .offset(70, -50)
+        .html(function(d) {
+            return (`${data.state}<br>Age: ${data.age}<br>Smokes: ${data.smokes}`);
+        });
 
     // //Create tooltip on chart
-    // chartGroup.call(toolTip);
+    chartGroup.call(toolTip);
 
     //Create event listeners to control tooltip display
 
