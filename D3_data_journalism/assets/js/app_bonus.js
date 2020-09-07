@@ -197,7 +197,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
 
   var ageLabel =  labelGroup.append("text")
     .attr("x", 0)
-    .attr("y", 80)
+    .attr("y", 40)
     .attr("value", "age")
     .classed("active", true)
     .text("State Average Age");
@@ -211,53 +211,48 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
 
   var healthcareLabel = labelGroup.append("text")
     .attr("x", 0)
-    .attr("y", 60)
+    .attr("y", 20)
     .attr("value", "healthcare")
     .classed("active", true)
     .text("Healthcare (%)");
+// append y axis
 
   var smokeLabel = labelGroup.append("text")
-    .attr("x", 0)
-    .attr("y", 60)
-    .attr("value", "smokes")
-    .classed("active", true)
-    .text("Number of smokers");
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left + 80)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .attr("class", "axisText")
+    .text("Number of Smokers");
 
   var obesityLabel = labelGroup.append("text")
-    .attr("x", 0)
-    .attr("y", 60)
-    .attr("value", "obesity")
-    .classed("active", true)
-    .text("Obesity (%)");
-
-  var povertyLabel = labelGroup.append("text")
-    .attr("x", 0)
-    .attr("y", 60)
-    .attr("value", "poverty")
-    .classed("active", true)
-    .text("Poverty (%)");
-  
-    
-    
-  chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left + 40)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
     .attr("class", "axisText")
-    .text("Number of Smokers");
-    
-  chartGroup.append("text")
-    .attr("transform", `translate(${width / 2}, ${height + margin.top - 35})`)
-    .attr("class", "axisText")
-    .text("Age of Smokers");
+    .text("Percent obese people");
 
+
+  var povertyLabel = labelGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left + 60)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .attr("class", "axisText")
+    .text("Percent Poverty");
+
+  
+    
+    
   var circleGroup = updateToolTip(chosenXaxis, circleGroup, chosenYaxis);
 
   labelGroup.selectAll("text")
-    .on(click, function(){
+
+    .on(click, function() {
 
       var value = d3.select(this).attr("value");
+
       if (value != chosenXaxis) {
         chosenXaxis = value;
 
@@ -283,15 +278,16 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
           healthcareLabel.classed("active", false)
             .classed("inactive", true);
         }
-        else (chosenXaxis === "healthcare") {
+        else {
           healthcareLabel.classed("active", true)
             .classed("inactive", false);
           incomeLabel.classed("active", false)
             .classed("inactive", true);
           ageLabel.classed("active", false)
             .classed("inactive", true);
-        }
-      }
+        };
+      };
+
       if (value != chosenYaxis) {
         chosenYaxis = value;
 
@@ -317,7 +313,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
           smokesLabel.classed("active", false)
             .classed("inactive", true);
         }
-        else (chosenXaxis === "poverty") {
+        else {
           povertyLabel.classed("active", true)
             .classed("inactive", false);
           obesityLabel.classed("active", false)
@@ -325,7 +321,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
           smokesLabel.classed("active", false)
             .classed("inactive", true);
         }
-      
+      };
       circleGroup = updateCircle(circleGroup, xLinearScale, xAxis, yAxis, chosenYaxis);
 
       circleGroup = updateToolTip(chosenXaxis, circleGroup, chosenYaxis);
