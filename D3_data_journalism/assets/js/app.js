@@ -3,12 +3,12 @@
 //Set size and margins for chart
 
 var svgwidth = 960;
-var svgheight = 500;
+var svgheight = 600;
 
 var margin = {
-    top: 20,
-    right: 40,
-    bottom: 40,
+    top: 100,
+    right: 100,
+    bottom: 100,
     left: 100,
 };
 
@@ -93,7 +93,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     .text("Number of Smokers");
     
     chartGroup.append("text")
-    .attr("transform", `translate(${width / 2}, ${height + margin.top + 20})`)
+    .attr("transform", `translate(${width / 2}, ${height + margin.top - 35})`)
     .attr("class", "axisText")
     .text("Age of Smokers");
        
