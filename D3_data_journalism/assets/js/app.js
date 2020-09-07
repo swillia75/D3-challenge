@@ -67,7 +67,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     .attr("fill", "maroon")
     .attr("opacity", ".25");
 
-  chartGroup.selectAll("g")
+  chartGroup.selectAll(".text")
     .data(censusData)
     .enter()
     .append("text")
