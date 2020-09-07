@@ -219,16 +219,16 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
 
   var smokeLabel = labelGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left + 80)
-    .attr("x", 0 - (height / 2))
+    .attr("x", 0 - margin.left +250)
+    .attr("y", 0 - (height + 135))
     .attr("dy", "1em")
     .attr("class", "axisText")
     .text("Number of Smokers");
 
   var obesityLabel = labelGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left + 40)
-    .attr("x", 0 - (height / 2))
+    .attr("x", 0 - margin.left + 250)
+    .attr("y", 0 - (height + 185))
     .attr("dy", "1em")
     .attr("class", "axisText")
     .text("Percent obese people");
@@ -236,8 +236,8 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
 
   var povertyLabel = labelGroup.append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", 0 - margin.left + 60)
-    .attr("x", 0 - (height / 2))
+    .attr("x", 0 - margin.left +250)
+    .attr("y", 0 - (height + 160))
     .attr("dy", "1em")
     .attr("class", "axisText")
     .text("Percent Poverty");
