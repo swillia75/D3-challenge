@@ -3,7 +3,7 @@
 //Set size and margins for chart
 
 var svgwidth = 960;
-var svgheight = 600;
+var svgheight = 500;
 
 var margin = {
     top: 20,

@@ -35,9 +35,10 @@
   stroke: #e3e3e3;
 }
 
-.chart {
+.scatter {
   display: block;
   margin: 0;
+  padding-bottom: 20px;
 }
 
 .d3-tip {
