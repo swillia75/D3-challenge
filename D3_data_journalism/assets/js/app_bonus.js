@@ -137,7 +137,7 @@ function updateToolTip(chosenXaxis, circleGroup, chosenYaxis) {
             return (`${data.state} ${data[chosenXaxis]}<br>${data[chosenYaxis]}`)
       });
 
-    circleGroup.call(toolTip);
+     circleGroup.call(toolTip);
 
     //mouseover event - show data
 
@@ -166,6 +166,8 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     data.obesity = +data.obesity;
     data.healthcare = +data.healthcare;
   });
+
+  
 
   //Create x and y scale fucntions
   var xLinearScale = xScale(censusData, chosenXaxis);
@@ -238,7 +240,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     .classed("inactive", true)
     .text("Percecnt poverty");
 
-  //Create group for x labels
+  //Create group for y labels
   
   var ylabelGroup = chartGroup.append("g")
   .attr("transform", "rotate(-90)")
@@ -291,7 +293,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
         xAxis = changeXAxes(xLinearScale, xAxis);
         
              
-      
+        //Activate x axis when label is clicked
         if (chosenXaxis === "age") {
           ageLabel.classed("active", true)
             .classed("inactive", false);
@@ -335,7 +337,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
         yAxis = changeYAxes(YLinearScale, YAxis);
 
             
-      
+        //Activate y axis when labels are clicked
         if (chosenYaxis === "smokes") {
           smokeLabel.classed("active", true)
             .classed("inactive", false);
@@ -362,6 +364,9 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
         }
       };
     });
+
+  //Update circleGroup and Tooltip
+  
   circleGroup = updateCircle(circleGroup, xLinearScale, xAxis, yAxis, chosenYaxis);
 
   circleGroup = updateToolTip(chosenXaxis, circleGroup, chosenYaxis);
