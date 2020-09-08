@@ -105,8 +105,8 @@ function updateToolTip(chosenXaxis, circleGroup, chosenYaxis) {
 
     //Use conditionals to update circle groups
 
-    if (chosenXaxis === "Healthcare") {
-        xlabel = "Healthcare";
+    if (chosenXaxis === "poverty") {
+        xlabel = "Percent Poverty";
     }
     else if (chosenXaxis === "income") {
         xlabel = "Average Income";
@@ -126,15 +126,15 @@ function updateToolTip(chosenXaxis, circleGroup, chosenYaxis) {
       ylabel = "Obesity";
     }
     else {
-      ylabel = "Poverty";
+      ylabel = "Healthcare";
     }
 
     //Create tooltip for circle group
     var toolTip = d3.tip()
-      .attr("class", "tooltip")
+      .attr("class", "d3-tip")
       .offset(-8, -0)
       .html(function(data) {
-            return (`${label} ${data[chosenXaxis]}<br>${data[chosenYaxis]}`)
+            return (`${data.state} ${data[chosenXaxis]}<br>${data[chosenYaxis]}`)
       });
 
     circleGroup.call(toolTip);
@@ -185,7 +185,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
   
 
   var yAxis = chartGroup.append("g")
-    //.classed("y-axis", true)
+    .classed("y-axis", true)
     .call(leftAxis);
 
   //Create circles
@@ -195,7 +195,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     .append("circle")
     .attr("cx", data => xLinearScale(data[chosenXaxis]))
     .attr("cy", data => yLinearScale(data[chosenYaxis]))
-    .attr("r", 15)
+    .attr("r", 10)
     .attr("fill", "maroon")
     .attr("opacity", ".25");
       
@@ -231,12 +231,12 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     .classed("inactive", true)
     .text("State Average income");
 
-  var healthcareLabel = xlabelGroup.append("text")
+  var povertyLabel = xlabelGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
-    .attr("value", "healthcare")
+    .attr("value", "poverty")
     .classed("inactive", true)
-    .text("Healthcare (%)");
+    .text("Percecnt poverty");
 
   //Create group for x labels
   
@@ -247,7 +247,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     .attr("y", 20 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
-    .attr("class", "axisText")
+    .attr("value", "smokes")
     .classed("active", true)
     .text("Number of Smokers");
 
@@ -255,18 +255,18 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     .attr("y", 40 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
-    .attr("class", "axisText")
+    .attr("value", "obesity")
     .classed("inactive", true)
     .text("Percent obese people");
 
 
-  var povertyLabel = ylabelGroup.append("text")
+  var healthcareLabel = ylabelGroup.append("text")
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
-    .attr("class", "axisText")
+    .attr("value", "healthcare")
     .classed("inactive", true)
-    .text("Percent Poverty");
+    .text("Healthcare (%)");
 
   
     
@@ -297,7 +297,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
             .classed("inactive", false);
           incomeLabel.classed("active", false)
             .classed("inactive", true);
-          healthcareLabel.classed("active", false)
+          povertyLabel.classed("active", false)
             .classed("inactive", true);
         }
         else if (chosenXaxis === "income") {
@@ -305,11 +305,11 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
             .classed("inactive", false);
           ageLabel.classed("active", false)
             .classed("inactive", true);
-          healthcareLabel.classed("active", false)
+          povertyLabel.classed("active", false)
             .classed("inactive", true);
         }
         else {
-          healthcareLabel.classed("active", true)
+          povertyLabel.classed("active", true)
             .classed("inactive", false);
           incomeLabel.classed("active", false)
             .classed("inactive", true);
@@ -339,7 +339,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
         if (chosenYaxis === "smokes") {
           smokeLabel.classed("active", true)
             .classed("inactive", false);
-          povertyLabel.classed("active", false)
+          healthcareLabel.classed("active", false)
             .classed("inactive", true);
           obesityLabel.classed("active", false)
             .classed("inactive", true);
@@ -347,13 +347,13 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
         if (chosenYaxis === "obesity") {
           obesityLabel.classed("active", true)
             .classed("inactive", false);
-          povertyLabel.classed("active", false)
+          healthcareLabel.classed("active", false)
             .classed("inactive", true);
           smokesLabel.classed("active", false)
             .classed("inactive", true);
         }
         else {
-          povertyLabel.classed("active", true)
+          healthcareLabel.classed("active", true)
             .classed("inactive", false);
           obesityLabel.classed("active", false)
             .classed("inactive", true);
