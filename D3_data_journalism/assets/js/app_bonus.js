@@ -366,7 +366,6 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     });
 
   //Update circleGroup and Tooltip
-  
   circleGroup = updateCircle(circleGroup, xLinearScale, xAxis, yAxis, chosenYaxis);
 
   circleGroup = updateToolTip(chosenXaxis, circleGroup, chosenYaxis);
