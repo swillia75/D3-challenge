@@ -88,75 +88,75 @@ function changeYAxes(newYScale, yAxis) {
 //Function to update circles
 function updateCircle(circleGroup, newXScale, chosenXaxis, newYScale, chosenYaxis) {
 
-    circleGroup.transition()
-      .duration(1500)
-      .attr("cx", data => newXScale(data[chosenXaxis]))
-      .attr("cy", data => newYScale(data[chosenYaxis]));
+  circleGroup.transition()
+    .duration(1500)
+    .attr("cx", data => newXScale(data[chosenXaxis]))
+    .attr("cy", data => newYScale(data[chosenYaxis]));
 
-    return circleGroup;
+  return circleGroup;
 };
 
 //Function to update circlegroup with tootip
 
 function updateToolTip(chosenXaxis, circleGroup, chosenYaxis) {
    
-    //Assign variable to x labels
-    var xlabel;
+   //Assign variable to x labels
+  var xlabel;
 
-    //Use conditionals to update circle groups
+  //Use conditionals to update circle groups
 
-    if (chosenXaxis === "poverty") {
-        xlabel = "Percent Poverty";
-    }
-    else if (chosenXaxis === "income") {
-        xlabel = "Average Income";
-    }
-    else {
-        xlabel = "Age";
-    }
+  if (chosenXaxis === "poverty") {
+    xlabel = "Percent Poverty";
+  }
+  else if (chosenXaxis === "income") {
+    xlabel = "Average Income";
+  }
+  else {
+    xlabel = "Age";
+  }
 
-    //Assign variable to y labels
-    var ylabel;
+  //Assign variable to y labels
+  var ylabel;
 
-    //Use conditionals to update circle groups
-    if (chosenYaxis === "smokes") {
-      ylabel = "Smokes";
-    }
-    else if (chosenYaxis === "obesity") {
-      ylabel = "Obesity";
-    }
-    else {
-      ylabel = "Healthcare";
-    }
+  //Use conditionals to update circle groups
+  if (chosenYaxis === "smokes") {
+    ylabel = "Smokes";
+  }
+  else if (chosenYaxis === "obesity") {
+    ylabel = "Obesity";
+  }
+  else {
+    ylabel = "Healthcare";
+  }
 
-    //Create tooltip for circle group
-    var toolTip = d3.tip()
-      .attr("class", "d3-tip")
-      .offset(-8, -0)
-      .html(function(data) {
-            return (`${data.state} ${data[chosenXaxis]}<br>${data[chosenYaxis]}`)
-      });
+  //Create tooltip for circle group
+  // var toolTip = d3.tip()
+  //   .attr("class", "d3-tip")
+  //   .offset(-8, -0)
+  //   .html(function(data) {
+  //         return (`${data.state} ${data[chosenXaxis]}<br>${data[chosenYaxis]}`)
+  //   });
 
-     circleGroup.call(toolTip);
+  //  circleGroup.call(toolTip);
 
-    //mouseover event - show data
+  // //mouseover event - show data
 
-    circleGroup.on("mouseover", function(data, index) {
-        toolTip.show(data);
-    })
+  // circleGroup.on("mouseover", function(data, index) {
+  //     toolTip.show(data);
+  // })
 
-        //mouseout event - hide data
-        .on("mouseout", function(data, index) {
-            toolTip.hide(data);
-        });
+  //     //mouseout event - hide data
+  //     .on("mouseout", function(data, index) {
+  //         toolTip.hide(data);
+  //     });
 
-    return circleGroup;
-}
+  // return circleGroup;
+};
 
 //Read data from csv file
 
 d3.csv("assets/data/data.csv").then(function(censusData) {
-
+  console.log(censusData);
   //Parse data
   censusData.forEach(function(data) {
     data.age = +data.age;
@@ -332,9 +332,9 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
       if (value != chosenYaxis) {
         chosenYaxis = value;
 
-        YLinearScale = YScale(censusData, chosenYaxis);
+        YLinearScale = yScale(censusData, chosenYaxis);
 
-        yAxis = changeYAxes(YLinearScale, YAxis);
+        yAxis = changeYAxes(YLinearScale, yAxis);
 
             
         //Activate y axis when labels are clicked
@@ -351,7 +351,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
             .classed("inactive", false);
           healthcareLabel.classed("active", false)
             .classed("inactive", true);
-          smokesLabel.classed("active", false)
+          smokeLabel.classed("active", false)
             .classed("inactive", true);
         }
         else {
@@ -359,16 +359,17 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
             .classed("inactive", false);
           obesityLabel.classed("active", false)
             .classed("inactive", true);
-          smokesLabel.classed("active", false)
+          smokeLabel.classed("active", false)
             .classed("inactive", true);
         }
       };
     });
 
   //Update circleGroup and Tooltip
-  circleGroup = updateCircle(circleGroup, xLinearScale, xAxis, yAxis, chosenYaxis);
+  circleGroup = updateCircle(circleGroup, xLinearScale, chosenYaxis);
 
-  circleGroup = updateToolTip(chosenXaxis, circleGroup, chosenYaxis);
+  //circleGroup = updateToolTip(chosenXaxis, circleGroup, chosenYaxis);
       
   
 });
+
