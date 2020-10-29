@@ -37,5 +37,5 @@ Results
 A dashboard was created that displayed the generated scatter plot to compare the number of smokers and the age of smokers. The 
 circles were created with the state abbreviation to show the state. An advanced scatter plot is in progress to change between each input.
 
-![](D3_data_journalism/images/HC%20 vs State%20avg%20age.png)
+![](D3_data_journalism/images/HC%20vs%20State%20avg%20age.png)
 
